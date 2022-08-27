@@ -18,13 +18,14 @@ export class FlashComponent {
   @Output() onEdit = new EventEmitter();
   @Output() onDelete = new EventEmitter();
   @Output() onRemenberChange = new EventEmitter();
+  @Output() OnUpdate = new EventEmitter()
 
   public deleteFlash(){
     this.onDelete.emit(this.flash)
   }
 
   public editFlash(){
-    this.onEdit.emit(this.flash.id)
+    this.onEdit.emit(this.flash)
   }
 
   public markCorrect(){
