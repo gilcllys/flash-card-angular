@@ -1,6 +1,7 @@
 import {Component,ViewChild} from '@angular/core';
 import {IFlash} from "./flash.model";
 import {NgForm} from "@angular/forms";
+import {FlashService} from "./service/flash.service";
 
 @Component({
   selector: 'app-root',
@@ -10,42 +11,20 @@ import {NgForm} from "@angular/forms";
 
 
 export class AppComponent {
+  constructor(private flashService: FlashService) {
+  }
   updateFlash : any = []
   editing:boolean = false
-  question:string=''
+  question:string= ''
   answer:string = ''
-  public getRandomNumber() {
-    return Math.floor(Math.random() * 10000)
-  }
+  flashes: IFlash[] = this.flashService.flashes
 
-  flashes: IFlash[] = [
-    {
-      question: 'Question 1',
-      answer: 'Answer: 1',
-      show: false,
-      id: this.getRandomNumber()
-    },
-    {
-      question: 'Question 2',
-      answer: 'Answer: 2',
-      show: false,
-      id: this.getRandomNumber()
-    },
-    {
-      question: 'Question 3',
-      answer: 'Answer: 3',
-      show: false,
-      id: this.getRandomNumber()
-    }]
-
-  public handleToogleCard(event: any): void {
-    event.show = !event.show
+  public handleToogleCard(event: any) {
+    event.show=this.flashService.ServiceHandleToogle(event)
   }
 
   public handleDelete(event:any) {
-    const flashId = this.flashes.indexOf(event);
-    console.log(flashId)
-    this.flashes.splice(flashId, 1)
+    this.flashService.ServiceHandleDelete(event)
   }
 
   handleEdit(event: any) {
@@ -53,23 +32,14 @@ export class AppComponent {
     this.answer = event.answer
     this.updateFlash = event
     this.editing = true
-    //TODO: we will add aditing logic after adding the form
   }
 
   handleRemenberChange(event:any){
-    event.flash.remembered = event.flag
+    this.flashService.ServicehandleRemenberChange(event)
   }
 
   onSubmit(f:NgForm){
-    if(f.valid){
-      this.flashes.push({
-        question: f.value.question,
-        answer: f.value.answer,
-        show: false,
-        id: this.getRandomNumber()
-      })
-    }
-
+    this.flashService.ServiceOnSubmit(f)
   }
 
   onClear():void{
@@ -84,7 +54,6 @@ export class AppComponent {
     const flashCardIndex = this.flashes.indexOf(this.updateFlash)
     this.flashes[flashCardIndex].question = this.question
     this.flashes[flashCardIndex].answer = this.answer
-    
   }
 
 
