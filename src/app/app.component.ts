@@ -10,7 +10,7 @@ import {NgForm} from "@angular/forms";
 
 
 export class AppComponent {
-  updateId : number = 0
+  updateFlash : any = []
   editing:boolean = false
   question:string=''
   answer:string = ''
@@ -51,7 +51,7 @@ export class AppComponent {
   handleEdit(event: any) {
     this.question = event.question
     this.answer = event.answer
-    this.updateId = event.id
+    this.updateFlash = event
     this.editing = true
     //TODO: we will add aditing logic after adding the form
   }
@@ -76,9 +76,15 @@ export class AppComponent {
     this.question = ''
     this.answer = ''
   }
+  onCancel():void{
+    this.editing = false
+  }
 
   onUpdate() {
-    console.log(this.updateId)
+    const flashCardIndex = this.flashes.indexOf(this.updateFlash)
+    this.flashes[flashCardIndex].question = this.question
+    this.flashes[flashCardIndex].answer = this.answer
+    
   }
 
 

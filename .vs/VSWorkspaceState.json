@@ -3,8 +3,10 @@
     "",
     "\\.angular",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\componente",
+    "\\src\\app\\componente\\flash"
   ],
-  "SelectedNode": "\\src",
+  "SelectedNode": "\\src\\app\\componente\\flash\\flash.component.html",
   "PreviewInSolutionExplorer": false
 }
